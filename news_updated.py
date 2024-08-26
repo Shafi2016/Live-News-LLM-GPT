@@ -23,10 +23,7 @@ with st.sidebar:
     
     # Add a slider to control the word count for summaries
     word_count = st.slider("Summary Word Count", min_value=100, max_value=300, value=100, step=10)
-    
-    st.caption("*Search: Uses SerpAPI only, retrieves search results.*")
-    st.caption("*Search & Summarize: Uses SerpAPI & OpenAI APIs, summarizes each search result.*")
-    st.caption("*Search & Summarize All: Provides a brief report summarizing all search results collectively, using the pattern of providing Introduction, Main points, Conclusion, and References Link*")
+   
 
 search_query = st.text_input("Search Query", label_visibility="collapsed")
 col1, col2, col3 = st.columns([1, 1, 1])
