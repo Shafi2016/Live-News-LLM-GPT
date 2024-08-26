@@ -19,7 +19,7 @@ st.write("Stay informed with concise summaries of the latest news. Customize you
 # Organize the sidebar
 with st.sidebar:
     st.header("Search Settings")
-    num_results = st.number_input("Number of Search Results", min_value=3, max_value=15, value=3)
+    num_results = st.number_input("Number of Search Results", min_value=1, max_value=15, value=3)
     word_count = st.slider("Summary Word Count", min_value=100, max_value=300, value=100, step=10)
 
 search_query = st.text_input("What news are you looking for today?", label_visibility="collapsed")
