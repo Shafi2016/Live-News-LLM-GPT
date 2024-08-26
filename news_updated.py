@@ -15,7 +15,7 @@ serpapi_api_key = st.secrets["general"]["SERPAPI_API_KEY"]
 # Add a custom header with a logo and title
 st.markdown("""
     <div style="background-color:#0077a8;padding:10px;border-radius:5px;">
-        <img src="https://raw.githubusercontent.com/your-username/your-repo/main/logo.PNG" style="float:left;width:70px;margin-right:15px;">
+        <img src="https://raw.githubusercontent.com/Shafi2016/Live-News-LLM-GPT/main/logo.PNG" style="float:left;width:70px;margin-right:15px;">
         <h1 style="color:white;">News Analytics</h1>
         <p style="color:white;">Explore trends and patterns or research topics of interest.</p>
     </div>
