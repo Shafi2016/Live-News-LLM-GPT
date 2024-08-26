@@ -42,19 +42,16 @@ with st.sidebar:
 
 # Add a custom header for the main section
 st.markdown("""
-    <div style="background-color:#0077a8;padding:10px;border-radius:5px;width:90%;max-width:1000px;">
+    <div style="background-color:#0077a8;padding:10px;border-radius:5px;width:100%;max-width:1200px;margin: 0 auto;">
         <h1 style="color:white;">SpotLight News</h1>
-        <p style="color:white; font-size:18px;">Spotlight the stories that matter with quick summaries and curated insights, delivered instantly.</p>
+        <p style="color:white; font-size:18px; white-space: nowrap; text-align:center;">Spotlight the stories that matter with quick summaries and curated insights, delivered instantly.</p>
     </div>
 """, unsafe_allow_html=True)
 
+# Add input for search query, ensuring it aligns with the header
+search_query = st.text_input("What news are you looking for today?", label_visibility="collapsed", key="search", help="Enter your search query here.")
+st.markdown("<style>div.stTextInput > div > input {width: 100%; max-width: 1200px; margin: 0 auto;}</style>", unsafe_allow_html=True)
 
-
-# Add spacing between the header and the rest of the content
-st.markdown("<br>", unsafe_allow_html=True)
-
-# Add input for search query
-search_query = st.text_input("What news are you looking for today?", label_visibility="collapsed")
 
 # Add a row of buttons
 col1, col2, col3 = st.columns([1, 1, 1])
