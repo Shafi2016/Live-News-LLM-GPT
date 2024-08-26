@@ -44,13 +44,15 @@ with st.sidebar:
 st.markdown("""
     <div style="background-color:#0077a8;padding:10px;border-radius:5px;width:100%;max-width:1200px;margin: 0 auto;">
         <h1 style="color:white;">SpotLight News</h1>
-        <p style="color:white; font-size:17px; white-space: nowrap; text-align:center;">Spotlight the stories that matter with quick summaries and curated insights, delivered instantly.</p>
+        <p style="color:white; font-size:18px; white-space: nowrap; text-align:center;">Spotlight the stories that matter with quick summaries and curated insights, delivered instantly.</p>
     </div>
+    <div style="margin-bottom: 30px;"></div>  <!-- Added space between the title and the search box -->
 """, unsafe_allow_html=True)
 
 # Add input for search query, ensuring it aligns with the header
 search_query = st.text_input("What news are you looking for today?", label_visibility="collapsed", key="search", help="Enter your search query here.")
 st.markdown("<style>div.stTextInput > div > input {width: 100%; max-width: 1200px; margin: 0 auto;}</style>", unsafe_allow_html=True)
+
 
 
 # Add a row of buttons
