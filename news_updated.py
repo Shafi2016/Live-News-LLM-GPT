@@ -42,7 +42,7 @@ with st.sidebar:
 
 # Add a custom header for the main section
 st.markdown("""
-    <div style="background-color:#0077a8;padding:10px;border-radius:5px;">
+    <div style="background-color:#0077a8;padding:10px;border-radius:6px;">
         <h1 style="color:white;">SpotLight News</h1>
         <p style="color:white;">Spotlight the stories that matter with quick summaries and curated insights, delivered instantly.</p>
     </div>
