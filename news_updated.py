@@ -13,7 +13,7 @@ st.markdown("""
     <style>
         /* Increase the width of the main content and sidebar */
         .main {
-            max-width: 90%; /* Increase this percentage to make the content area wider */
+            max-width: 100%; /* Increase this percentage to make the content area wider */
             margin: 0 auto;
             padding-left: 20px;
             padding-right: 20px;
