@@ -9,23 +9,18 @@ from dateutil.relativedelta import relativedelta
 from datetime import datetime, timedelta
 
 # Streamlit app
-st.subheader('Latest News...')
+st.title('Live News Summarizer')
 
-# Access API keys from Streamlit Secrets
-openai_api_key = st.secrets["general"]["OPENAI_API_KEY"]
-serpapi_api_key = st.secrets["general"]["SERPAPI_API_KEY"]
+# Add a description or tagline
+st.write("Stay informed with concise summaries of the latest news. Customize your search and get quick insights.")
 
-# st.write("OpenAI API Key:", openai_api_key)
-# st.write("SerpAPI Key:", serpapi_api_key)
-# Get the number of results, word count, and search query from the user
+# Organize the sidebar
 with st.sidebar:
-    num_results = st.number_input("Number of Search Results", min_value=3, max_value=15)
-    
-    # Add a slider to control the word count for summaries
+    st.header("Search Settings")
+    num_results = st.number_input("Number of Search Results", min_value=3, max_value=15, value=3)
     word_count = st.slider("Summary Word Count", min_value=100, max_value=300, value=100, step=10)
-   
 
-search_query = st.text_input("Search Query", label_visibility="collapsed")
+search_query = st.text_input("What news are you looking for today?", label_visibility="collapsed")
 col1, col2, col3 = st.columns([1, 1, 1])
 
 # Function to log errors
@@ -75,44 +70,34 @@ def search_query_serpapi(query, serpapi_api_key, num_results):
 
 # If the 'Search' button is clicked
 if col1.button("Search"):
-    # Validate inputs
     if not search_query.strip():
         st.error("Please provide the missing fields.")
     else:
         try:
             with st.spinner("Please wait..."):
-                # Show the top X relevant news articles from the previous week using SerpAPI
                 result_dict = search_query_serpapi(search_query, serpapi_api_key, num_results)
-
                 if not result_dict or 'organic_results' not in result_dict:
                     st.error(f"No search results for: {search_query}.")
                 else:
                     for i, item in zip(range(num_results), result_dict['organic_results']):
                         raw_date = item.get('date', 'No date available')
                         exact_date = convert_relative_date(raw_date)
-                        if exact_date:
-                            display_date = f"{raw_date} ({exact_date})"
-                        else:
-                            display_date = raw_date
-                        st.success(f"Title: {item['title']}\n\nLink: {item['link']}\n\nDate: {display_date}\n\nSnippet: {item.get('snippet', 'No snippet available')}")
+                        display_date = f"{raw_date} ({exact_date})" if exact_date else raw_date
+                        st.success(f"**Title:** {item['title']}\n\n**Link:** {item['link']}\n\n**Date:** {display_date}\n\n**Snippet:** {item.get('snippet', 'No snippet available')}")
         except Exception as e:
             log_error(e)
 
 # If 'Search & Summarize' button is clicked
 if col2.button("Search & Summarize"):
-    # Validate inputs
     if not search_query.strip():
         st.error("Please provide the missing fields.")
     else:
         try:
             with st.spinner("Please wait..."):
-                # Show the top X relevant news articles from the previous week using SerpAPI
                 result_dict = search_query_serpapi(search_query, serpapi_api_key, num_results)
-
                 if not result_dict or 'organic_results' not in result_dict:
                     st.error(f"No search results for: {search_query}.")
                 else:
-                    # Load URL data from the top X news search results
                     for i, item in zip(range(num_results), result_dict['organic_results']):
                         try:
                             loader = UnstructuredURLLoader(
@@ -123,28 +108,14 @@ if col2.button("Search & Summarize"):
                                 }
                             )
                             data = loader.load()
-                        except Exception as e:
-                            st.error(f"Failed to load URL: {item['link']}")
-                            log_error(e)
-                            continue
-
-                        # Initialize the ChatOpenAI module, load and run the summarize chain
-                        llm = ChatOpenAI(temperature=0, model="gpt-4o-mini", openai_api_key=openai_api_key)
-                        prompt_template = PromptTemplate(
-                            template=f"Write a summary of the following in {word_count} words:\n\n{{text}}",
-                            input_variables=["text"]
-                        )
-                        chain = load_summarize_chain(llm, chain_type="stuff", prompt=prompt_template)
-
-                        try:
+                            llm = ChatOpenAI(temperature=0, model="gpt-4o-mini", openai_api_key=openai_api_key)
+                            prompt_template = PromptTemplate(template=f"Write a summary of the following in {word_count} words:\n\n{{text}}", input_variables=["text"])
+                            chain = load_summarize_chain(llm, chain_type="stuff", prompt=prompt_template)
                             summary = chain.run(data)
                             raw_date = item.get('date', 'No date available')
                             exact_date = convert_relative_date(raw_date)
-                            if exact_date:
-                                display_date = f"{raw_date} ({exact_date})"
-                            else:
-                                display_date = raw_date
-                            st.success(f"Title: {item['title']}\n\nLink: {item['link']}\n\nDate: {display_date}\n\nSummary: {summary}")
+                            display_date = f"{raw_date} ({exact_date})" if exact_date else raw_date
+                            st.success(f"**Title:** {item['title']}\n\n**Link:** {item['link']}\n\n**Date:** {display_date}\n\n**Summary:** {summary}")
                         except Exception as e:
                             st.error(f"Failed to summarize article: {item['title']}")
                             log_error(e)
@@ -153,19 +124,15 @@ if col2.button("Search & Summarize"):
 
 # If 'Search & Summarize All' button is clicked
 if col3.button("Search & Summarize All"):
-    # Validate inputs
     if not search_query.strip():
         st.error("Please provide the missing fields.")
     else:
         try:
             with st.spinner("Please wait..."):
-                # Show the top X relevant news articles from the previous week using SerpAPI
                 result_dict = search_query_serpapi(search_query, serpapi_api_key, num_results)
-
                 if not result_dict or 'organic_results' not in result_dict:
                     st.error(f"No search results for: {search_query}.")
                 else:
-                    # Collect all summaries and references
                     combined_summary = ""
                     references = []
                     for i, item in zip(range(num_results), result_dict['organic_results']):
@@ -178,20 +145,9 @@ if col3.button("Search & Summarize All"):
                                 }
                             )
                             data = loader.load()
-                        except Exception as e:
-                            st.error(f"Failed to load URL: {item['link']}")
-                            log_error(e)
-                            continue
-
-                        # Initialize the ChatOpenAI module, load and run the summarize chain
-                        llm = ChatOpenAI(temperature=0, model="gpt-4o-mini", openai_api_key=openai_api_key)
-                        prompt_template = PromptTemplate(
-                            template=f"Write a summary of the following in {word_count} words:\n\n{{text}}",
-                            input_variables=["text"]
-                        )
-                        chain = load_summarize_chain(llm, chain_type="stuff", prompt=prompt_template)
-
-                        try:
+                            llm = ChatOpenAI(temperature=0, model="gpt-4o-mini", openai_api_key=openai_api_key)
+                            prompt_template = PromptTemplate(template=f"Write a summary of the following in {word_count} words:\n\n{{text}}", input_variables=["text"])
+                            chain = load_summarize_chain(llm, chain_type="stuff", prompt=prompt_template)
                             summary = chain.run(data)
                             combined_summary += f"{summary}\n\n"
                             references.append(item['link'])
@@ -202,7 +158,6 @@ if col3.button("Search & Summarize All"):
                     # Display the combined summary and references
                     st.markdown("### Combined Summary")
                     st.write(combined_summary)
-                    
                     st.markdown("### References")
                     for i, link in enumerate(references, 1):
                         st.write(f"{i}. [Link to article]({link})")
