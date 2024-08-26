@@ -45,7 +45,7 @@ with st.sidebar:
 st.markdown("""
     <div style="background-color:#0077a8;padding:12px;border-radius:6px;">
         <h1 style="color:white;">SpotLight News</h1>
-        <p style="color:white; font-size:18px;">Spotlight the stories that matter with quick summaries and curated insights, delivered instantly.</p>
+        <p style="color:white; font-size:16px;">Spotlight the stories that matter with quick summaries and curated insights, delivered instantly.</p>
     </div>
 """, unsafe_allow_html=True)
 
