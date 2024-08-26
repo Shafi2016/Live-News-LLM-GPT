@@ -22,8 +22,8 @@ with st.sidebar:
 # Add a custom header for the main section
 st.markdown("""
     <div style="background-color:#0077a8;padding:10px;border-radius:5px;">
-        <h1 style="color:white;">News Analytics</h1>
-        <p style="color:white;">Explore trends and patterns or research topics of interest.</p>
+        <h1 style="color:white;">SpotLight News</h1>
+        <p style="color:white;">Spotlight the stories that matter with quick summaries and curated insights, delivered instantly.</p>
     </div>
 """, unsafe_allow_html=True)
 
