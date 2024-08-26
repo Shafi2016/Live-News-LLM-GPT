@@ -8,21 +8,32 @@ import traceback
 from dateutil.relativedelta import relativedelta
 from datetime import datetime, timedelta
 
+# Access API keys from Streamlit Secrets
 openai_api_key = st.secrets["general"]["OPENAI_API_KEY"]
 serpapi_api_key = st.secrets["general"]["SERPAPI_API_KEY"]
-# Streamlit app
-st.title('Live News Summarizer')
 
-# Add a description or tagline
-st.write("Stay informed with concise summaries of the latest news. Customize your search and get quick insights.")
+# Add a custom header with a logo and title
+st.markdown("""
+    <div style="background-color:#0077a8;padding:10px;border-radius:5px;">
+        <img src="https://raw.githubusercontent.com/your-username/your-repo/main/logo.PNG" style="float:left;width:70px;margin-right:15px;">
+        <h1 style="color:white;">News Analytics</h1>
+        <p style="color:white;">Explore trends and patterns or research topics of interest.</p>
+    </div>
+""", unsafe_allow_html=True)
 
-# Organize the sidebar
+# Add spacing between the header and the rest of the content
+st.markdown("<br>", unsafe_allow_html=True)
+
+# Organize the sidebar with proper spacing and headers
 with st.sidebar:
     st.header("Search Settings")
     num_results = st.number_input("Number of Search Results", min_value=1, max_value=15, value=3)
     word_count = st.slider("Summary Word Count", min_value=100, max_value=300, value=100, step=10)
 
+# Add input for search query
 search_query = st.text_input("What news are you looking for today?", label_visibility="collapsed")
+
+# Add a row of buttons
 col1, col2, col3 = st.columns([1, 1, 1])
 
 # Function to log errors
