@@ -8,23 +8,23 @@ import traceback
 from dateutil.relativedelta import relativedelta
 from datetime import datetime, timedelta
 
-# Custom CSS to increase page width
+# Custom CSS to expand the main content area and reduce white space
 st.markdown("""
     <style>
-        /* Increase the width of the main content */
+        /* Increase the width of the main content and sidebar */
         .main {
-            max-width: 1200px; /* Adjust this value to increase/decrease the width */
+            max-width: 90%; /* Increase this percentage to make the content area wider */
             margin: 0 auto;
+            padding-left: 20px;
+            padding-right: 20px;
         }
-        /* Adjust the font size for better readability */
-        h1, p, label {
-            font-size: 1.2em;
-        }
-        /* Adjust sidebar image alignment */
         .sidebar .element-container img {
             margin-left: auto;
             margin-right: auto;
             display: block;
+        }
+        .sidebar {
+            width: 25%; /* Adjust the width of the sidebar */
         }
     </style>
 """, unsafe_allow_html=True)
@@ -197,4 +197,3 @@ if col3.button("Search & Summarize All"):
                         st.write(f"{i}. [Link to article]({link})")
         except Exception as e:
             log_error(e)
-
