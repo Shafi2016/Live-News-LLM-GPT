@@ -12,10 +12,16 @@ from datetime import datetime, timedelta
 openai_api_key = st.secrets["general"]["OPENAI_API_KEY"]
 serpapi_api_key = st.secrets["general"]["SERPAPI_API_KEY"]
 
-# Add a custom header with a logo and title
+# Organize the sidebar with the logo and search settings
+with st.sidebar:
+    st.image("https://raw.githubusercontent.com/Shafi2016/Live-News-LLM-GPT/main/logo.PNG", width=120)  # Adjust the width as needed
+    st.header("Search Settings")
+    num_results = st.number_input("Number of Search Results", min_value=1, max_value=15, value=3)
+    word_count = st.slider("Summary Word Count", min_value=100, max_value=300, value=100, step=10)
+
+# Add a custom header for the main section
 st.markdown("""
     <div style="background-color:#0077a8;padding:10px;border-radius:5px;">
-        <img src="https://raw.githubusercontent.com/Shafi2016/Live-News-LLM-GPT/main/logo.PNG" style="float:left;width:70px;margin-right:15px;">
         <h1 style="color:white;">News Analytics</h1>
         <p style="color:white;">Explore trends and patterns or research topics of interest.</p>
     </div>
@@ -23,12 +29,6 @@ st.markdown("""
 
 # Add spacing between the header and the rest of the content
 st.markdown("<br>", unsafe_allow_html=True)
-
-# Organize the sidebar with proper spacing and headers
-with st.sidebar:
-    st.header("Search Settings")
-    num_results = st.number_input("Number of Search Results", min_value=1, max_value=15, value=3)
-    word_count = st.slider("Summary Word Count", min_value=100, max_value=300, value=100, step=10)
 
 # Add input for search query
 search_query = st.text_input("What news are you looking for today?", label_visibility="collapsed")
