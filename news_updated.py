@@ -43,7 +43,7 @@ with st.sidebar:
 # Add a custom header for the main section
 # Add a custom header for the main section with increased font size for the description
 st.markdown("""
-    <div style="background-color:#0077a8;padding:10px;border-radius:6px;">
+    <div style="background-color:#0077a8;padding:12px;border-radius:6px;">
         <h1 style="color:white;">SpotLight News</h1>
         <p style="color:white; font-size:18px;">Spotlight the stories that matter with quick summaries and curated insights, delivered instantly.</p>
     </div>
