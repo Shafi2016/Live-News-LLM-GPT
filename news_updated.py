@@ -8,6 +8,27 @@ import traceback
 from dateutil.relativedelta import relativedelta
 from datetime import datetime, timedelta
 
+# Custom CSS to increase page width
+st.markdown("""
+    <style>
+        /* Increase the width of the main content */
+        .main {
+            max-width: 1200px; /* Adjust this value to increase/decrease the width */
+            margin: 0 auto;
+        }
+        /* Adjust the font size for better readability */
+        h1, p, label {
+            font-size: 1.2em;
+        }
+        /* Adjust sidebar image alignment */
+        .sidebar .element-container img {
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+        }
+    </style>
+""", unsafe_allow_html=True)
+
 # Access API keys from Streamlit Secrets
 openai_api_key = st.secrets["general"]["OPENAI_API_KEY"]
 serpapi_api_key = st.secrets["general"]["SERPAPI_API_KEY"]
@@ -176,3 +197,4 @@ if col3.button("Search & Summarize All"):
                         st.write(f"{i}. [Link to article]({link})")
         except Exception as e:
             log_error(e)
+
