@@ -35,7 +35,7 @@ serpapi_api_key = st.secrets["general"]["SERPAPI_API_KEY"]
 
 # Organize the sidebar with the logo and search settings
 with st.sidebar:
-    st.image("https://raw.githubusercontent.com/Shafi2016/Live-News-LLM-GPT/main/logo.PNG", width=200)  # Adjust the width as needed
+    st.image("https://raw.githubusercontent.com/Shafi2016/Live-News-LLM-GPT/main/logo.PNG", width=230)  # Adjust the width as needed
     st.header("Search Settings")
     num_results = st.number_input("Number of Search Results", min_value=1, max_value=15, value=3)
     word_count = st.slider("Summary Word Count", min_value=100, max_value=300, value=100, step=10)
