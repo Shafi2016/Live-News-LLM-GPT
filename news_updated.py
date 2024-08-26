@@ -8,6 +8,8 @@ import traceback
 from dateutil.relativedelta import relativedelta
 from datetime import datetime, timedelta
 
+openai_api_key = st.secrets["general"]["OPENAI_API_KEY"]
+serpapi_api_key = st.secrets["general"]["SERPAPI_API_KEY"
 # Streamlit app
 st.title('Live News Summarizer')
 
