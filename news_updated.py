@@ -1,4 +1,5 @@
 import streamlit as st
+import streamlit_authenticator as stauth
 from langchain.prompts import PromptTemplate
 from langchain.chains.summarize import load_summarize_chain
 from langchain_openai import ChatOpenAI
@@ -7,19 +8,32 @@ import requests
 import traceback
 from dateutil.relativedelta import relativedelta
 from datetime import datetime, timedelta
+import yaml
+from yaml.loader import SafeLoader
 
-# Access codes are securely stored in Streamlit Secrets
-valid_access_codes = st.secrets["general"].get("valid_access_codes", [])
+# Load credentials and configuration from Streamlit Secrets
+credentials = yaml.safe_load(st.secrets["general"]["credentials"])
+cookie_name = st.secrets["general"]["cookie_name"]
+cookie_key = st.secrets["general"]["cookie_key"]
+cookie_expiry_days = st.secrets["general"]["cookie_expiry_days"]
 
-# Create a login form on the sidebar
-st.sidebar.header("Login")
-access_code = st.sidebar.text_input("Enter your access code", type="password")
+# Create an authenticator object with hashed passwords
+authenticator = stauth.Authenticate(
+    credentials,
+    cookie_name,
+    cookie_key,
+    cookie_expiry_days,
+    None  # No preauthorized emails in this example
+)
 
-# Explicit access code validation
-if access_code and access_code.strip() in valid_access_codes:
-    # If access code matches exactly, grant access
-    st.sidebar.success("Access granted!")
+# Display the login form in the sidebar
+name, authentication_status, username = authenticator.login('main')
 
+if authentication_status:
+    # Successful login
+    authenticator.logout('main')
+    st.write(f'Welcome *{name}*')
+    
     # Main app content goes here
     st.title("Welcome to SpotLight News!")
 
@@ -210,7 +224,8 @@ if access_code and access_code.strip() in valid_access_codes:
             except Exception as e:
                 log_error(e)
 
-else:
-    # Display an error if the access code is invalid or empty
-    st.sidebar.error("Invalid access code. Please try again.")
-    st.warning("You must provide a valid access code to use the app.")
+elif authentication_status == False:
+    st.error('Username/password is incorrect')
+
+elif authentication_status is None:
+    st.warning('Please enter your username and password')
