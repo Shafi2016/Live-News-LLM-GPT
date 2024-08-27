@@ -15,8 +15,8 @@ valid_access_codes = st.secrets["general"].get("valid_access_codes", [])
 st.sidebar.header("Login")
 access_code = st.sidebar.text_input("Enter your access code", type="password")
 
-# Validate access code only if it's exactly equal to one of the valid codes
-if access_code in valid_access_codes:
+# Validate access code
+if access_code and access_code in valid_access_codes:
     st.sidebar.success("Access granted!")
 
     # Main app content goes here - Users without valid access cannot proceed beyond this point
@@ -49,7 +49,6 @@ if access_code in valid_access_codes:
 
     # Organize the sidebar with the logo and search settings
     with st.sidebar:
-        # st.image("https://raw.githubusercontent.com/Shafi2016/Live-News-LLM-GPT/main/logo.PNG", width=250)  # Adjust the width as needed
         st.header("Search Settings")
         num_results = st.number_input("Number of Search Results", min_value=1, max_value=15, value=1)
         word_count = st.slider("Summary Word Count", min_value=100, max_value=300, value=100, step=10)
@@ -212,5 +211,6 @@ if access_code in valid_access_codes:
                 log_error(e)
 
 else:
+    # Display an error if the access code is invalid or empty
     st.sidebar.error("Invalid access code. Please try again.")
     st.warning("You must provide a valid access code to use the app.")
