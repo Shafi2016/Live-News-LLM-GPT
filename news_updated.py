@@ -15,13 +15,13 @@ valid_access_codes = st.secrets["general"].get("valid_access_codes", [])
 st.sidebar.header("Login")
 access_code = st.sidebar.text_input("Enter your access code", type="password")
 
-# Validate access code
-if access_code and access_code in valid_access_codes:
+# Ensure access is granted only if the entire access code matches
+if access_code and access_code.strip() in valid_access_codes:
     st.sidebar.success("Access granted!")
 
     # Main app content goes here - Users without valid access cannot proceed beyond this point
     st.title("Welcome to SpotLight News!")
-    
+
     # Custom CSS to expand the main content area and reduce white space
     st.markdown("""
         <style>
