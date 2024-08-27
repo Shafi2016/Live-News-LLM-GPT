@@ -15,19 +15,19 @@ valid_access_codes = st.secrets["general"].get("valid_access_codes", [])
 st.sidebar.header("Login")
 access_code = st.sidebar.text_input("Enter your access code", type="password")
 
-# Ensure access is granted only if the entire access code matches
+# Explicit access code validation
 if access_code and access_code.strip() in valid_access_codes:
+    # If access code matches exactly, grant access
     st.sidebar.success("Access granted!")
 
-    # Main app content goes here - Users without valid access cannot proceed beyond this point
+    # Main app content goes here
     st.title("Welcome to SpotLight News!")
 
     # Custom CSS to expand the main content area and reduce white space
     st.markdown("""
         <style>
-            /* Increase the width of the main content and sidebar */
             .main {
-                max-width: 100%; /* Increase this percentage to make the content area wider */
+                max-width: 100%;
                 margin: 0 auto;
                 padding-left: 20px;
                 padding-right: 20px;
@@ -38,7 +38,7 @@ if access_code and access_code.strip() in valid_access_codes:
                 display: block;
             }
             .sidebar {
-                width: 25%; /* Adjust the width of the sidebar */
+                width: 25%;
             }
         </style>
     """, unsafe_allow_html=True)
@@ -59,10 +59,10 @@ if access_code and access_code.strip() in valid_access_codes:
             <h1 style="color:white;">SpotLight News</h1>
             <p style="color:white; font-size:17px; white-space: nowrap; text-align:center;">Spotlight the stories that matter with quick summaries and curated insights, delivered instantly.</p>
         </div>
-        <div style="margin-bottom: 30px;"></div>  <!-- Added space between the title and the search box -->
+        <div style="margin-bottom: 30px;"></div>
     """, unsafe_allow_html=True)
 
-    # Add input for search query, ensuring it aligns with the header
+    # Add input for search query
     search_query = st.text_input("What news are you looking for today?", label_visibility="collapsed", key="search", help="Enter your search query here.")
     st.markdown("<style>div.stTextInput > div > input {width: 100%; max-width: 1200px; margin: 0 auto;}</style>", unsafe_allow_html=True)
 
