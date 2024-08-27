@@ -31,7 +31,7 @@ name, authentication_status, username = authenticator.login('main')
 
 if authentication_status:
     # Successful login
-    authenticator.logout('main')
+    authenticator.logout('Logout', 'main')  # Added logout option
     st.write(f'Welcome *{name}*')
     
     # Main app content goes here
