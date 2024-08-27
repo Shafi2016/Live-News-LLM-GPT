@@ -15,8 +15,8 @@ valid_access_codes = st.secrets["general"].get("valid_access_codes", [])
 st.sidebar.header("Login")
 access_code = st.sidebar.text_input("Enter your access code", type="password")
 
-# Validate access code only if it's not empty
-if access_code and access_code in valid_access_codes:
+# Validate access code only if it's exactly equal to one of the valid codes
+if access_code in valid_access_codes:
     st.sidebar.success("Access granted!")
 
     # Main app content goes here - Users without valid access cannot proceed beyond this point
