@@ -8,3 +8,4 @@ openai==1.40.6
 langchain-openai==0.1.22
 langchain-community==0.2.12
 streamlit-authenticator
+python-docx
