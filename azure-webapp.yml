@@ -32,4 +32,4 @@ jobs:
 
     - name: Run Streamlit App (for gen.py)
       run: |
-        streamlit run gen.py
+        streamlit run app.py
