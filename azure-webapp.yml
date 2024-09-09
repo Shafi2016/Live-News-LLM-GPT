@@ -1,9 +1,10 @@
-name: Deploy to Azure Web App
+name: Build and deploy Python app to Azure Web App - live-news-ai
 
 on:
   push:
     branches:
-      - main  # Trigger on pushes to the main branch
+      - main  # Deploy on push to main branch
+  workflow_dispatch:
 
 jobs:
   build-and-deploy:
@@ -25,6 +26,10 @@ jobs:
     - name: Deploy to Azure Web App
       uses: azure/webapps-deploy@v2
       with:
-        app-name: 'live-news-ai'   # Replace with your App Service name
-        slot-name: 'production'
+        app-name: 'livenews-ai'  # Replace with your App Service name
+        slot-name: 'Production'
         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+
+    - name: Run Streamlit App (for gen.py)
+      run: |
+        streamlit run gen.py
